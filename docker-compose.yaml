@@ -1,0 +1,21 @@
+version: "3.4"
+
+networks:
+  app-bar-net:
+
+services:
+  app-bar-back:
+    build: backend/
+    container_name: app-bar-backend
+    networks:
+      - app-bar-net
+    ports:
+      - 8080:8080
+
+  app-bar-front:
+    build: frontend/
+    container_name: app-bar-frontend
+    networks:
+      - app-bar-net
+    ports:
+      - 3000:3000
