@@ -7,6 +7,8 @@ services:
   app-bar-back:
     build: backend/
     container_name: app-bar-backend
+    environment:
+      taxes: 0.1 ##number must be between 0 and  1
     networks:
       - app-bar-net
     ports:
