@@ -1,4 +1,5 @@
 import locale
+import os
 
 from fastapi import FastAPI
 
@@ -16,17 +17,18 @@ from app.infra.db.memory.order.repositories.in_memory_order_repository import In
 
 def get_order_data():
     return {
-        '1': OrderDto(order_id='1', created='2024-09-10 12:00:30', rounds=[OrderRoundDto(created='2024-09-10 12:00:30', items=[
-            RoundItemDto(name='Corona', quantity=2), RoundItemDto(name='Club Colombia', quantity=1),
-        ]),
-                                                                  OrderRoundDto(
-                                                                      created='2024-09-10 12:20:31',
-                                                                      items=[
-                                                                          RoundItemDto(name='Quilmes', quantity=1),
-                                                                          RoundItemDto(name='Club Colombia',
-                                                                                       quantity=2),
-                                                                      ]),
-                                                                  ],
+        '1': OrderDto(order_id='1', created='2024-09-10 12:00:30',
+                      rounds=[OrderRoundDto(created='2024-09-10 12:00:30', items=[
+                          RoundItemDto(name='Corona', quantity=2), RoundItemDto(name='Club Colombia', quantity=1),
+                      ]),
+                              OrderRoundDto(
+                                  created='2024-09-10 12:20:31',
+                                  items=[
+                                      RoundItemDto(name='Quilmes', quantity=1),
+                                      RoundItemDto(name='Club Colombia',
+                                                   quantity=2),
+                                  ]),
+                              ],
                       ),
     }
 
@@ -39,14 +41,24 @@ def get_beer_data():
     }
 
 
+def get_env_var(key: str):
+    if key in os.environ:
+        return os.environ[key]
+    return None
+
+
 locale.setlocale(locale.LC_ALL, 'es_ES.UTF-8')
+
+taxes = float(get_env_var('taxes'))
+if not taxes or taxes < 0 or taxes > 1:
+    raise Exception('taxes should be between 0 and 1')
 
 app = FastAPI()
 
 order_repository = InMemoryOrderRepository(data=get_order_data(), adapter=OrderAdapter())
 beer_repository = InMemoryBeerRepository(data=get_beer_data(), adapter=BeerAdapter())
 
-order_use_case = OrderUseCase(order_repository=order_repository, beer_repository=beer_repository, taxes=0.1)
+order_use_case = OrderUseCase(order_repository=order_repository, beer_repository=beer_repository, taxes=taxes)
 order_presenter = OrderPresenter()
 order_router = OrderRouter(usecase=order_use_case, presenter=order_presenter)
 app.include_router(order_router.router, prefix="/api/v1", tags=["orders"])
