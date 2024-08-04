@@ -1,0 +1,8 @@
+__pycache__/
+*.py[cod]
+*$py.class
+bin/
+build/
+dist/
+.venv/
+.idea/
