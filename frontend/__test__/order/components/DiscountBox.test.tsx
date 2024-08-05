@@ -7,7 +7,7 @@ describe("DiscountBox Component", () => {
     expect(
       screen.getByPlaceholderText("ADD YOUR DISCOUNT CODE")
     ).toBeInTheDocument();
-    expect(screen.getByText("Apply")).toBeInTheDocument();
+    expect(screen.getByText("APPLY")).toBeInTheDocument();
   });
 
   test("when add a value to input then value change", () => {
@@ -19,7 +19,7 @@ describe("DiscountBox Component", () => {
 
   test("when click on button, then toast appear", () => {
     render(<DiscountBox />);
-    const button = screen.getByText("Apply");
+    const button = screen.getByText("APPLY");
     fireEvent.click(button);
     expect(screen.getByText("Not Implement Yet")).toBeInTheDocument();
   });

@@ -2,6 +2,7 @@
 import { SummaryItem } from "./SummaryItem";
 import { useState, useEffect } from "react";
 import { Toast } from "./Toast";
+import { CustomButton } from "@/components/CustomButton";
 
 interface SummaryProps {
   subtotal: string;
@@ -46,14 +47,7 @@ export const Summary: React.FC<SummaryProps> = ({
         <SummaryItem label={"Total"} value={total} isSemiBold={true} />
       </div>
       <div className="flex justify-center xl:h-full items-stretch w-full flex-col mt-6 md:mt-0">
-        <div className="flex w-full justify-center items-center md:justify-start md:items-start">
-          <button
-            className="mt-6 md:mt-0 dark:border-white dark:hover:bg-gray-900 dark:bg-transparent dark:text-white py-5 hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-gray-800 border border-gray-800 font-medium w-96 2xl:w-full text-base font-medium leading-4 text-gray-800"
-            onClick={handleClick}
-          >
-            PAY
-          </button>
-        </div>
+        <CustomButton text="PAY" handleClick={handleClick} />
         {showMessage && <Toast message="Not implemented yet" />}
       </div>
     </div>
