@@ -5,7 +5,7 @@ interface GridProp {
   items: ItemProp[];
 }
 
-export const ItemGrid = ({ items }: GridProp) => {
+export const ItemGrid: React.FC<GridProp> = ({ items }) => {
   return (
     <div className="flex flex-col justify-start items-start dark:bg-gray-800 bg-gray-50 px-4 py-8 md:py-6 md:p-6 xl:p-8 w-full">
       <p className="text-lg md:text-xl dark:text-white font-semibold leading-6 xl:leading-5 text-gray-800">

@@ -1,5 +1,6 @@
 import { Item as ItemProp } from "../../interfaces/Order";
-export const Item = ({ name, unit_price, total }: ItemProp) => {
+
+export const Item: React.FC<ItemProp> = ({ name, unit_price, total }) => {
   return (
     <div className="mt-4 md:mt-6 flex flex-col md:flex-row justify-start items-start md:items-center md:space-x-6 xl:space-x-8 w-full space-y-4">
       <div className="border-b border-gray-200 md:flex-row flex-col flex justify-between items-start w-full pb-8 space-y-4 md:space-y-0">
