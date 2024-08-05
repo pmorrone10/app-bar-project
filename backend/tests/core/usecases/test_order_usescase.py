@@ -4,6 +4,7 @@ from unittest.mock import MagicMock
 from app.core.usecases.order_usecase import OrderUseCase
 from app.domain.entities.beer import Beer
 from app.domain.entities.order import Order, OrderRound, RoundItem, Item
+from app.domain.entities.order_input import OrderInput
 from app.domain.exceptions.invalid_beer_exception import InvalidBeerException
 from app.domain.exceptions.not_found_exception import NotFoundException
 from app.domain.repositories.beer_repository import BeerRepository
@@ -83,17 +84,18 @@ class TestOrderUseCase(TestCase):
     def test_order_not_found(self):
         self.order_repository.get_order_by_id.return_value = None
         with self.assertRaises(NotFoundException):
-            self.order_usecase.get_order("123")
+            self.order_usecase.get_order(orderInput=OrderInput('123'))
 
     def test_when_order_exist(self):
         self.order_repository.get_order_by_id.return_value = default_order()
 
-        self.beer_repository.get_beers_with_name.return_value = {'Quilmes': Beer(name='Quilmes', quantity=5, price=150.0),
-                                                           'Club Colombia': Beer(name='Club Colombia', quantity=5,
-                                                                                 price=200.0),
-                                                           'Corona': Beer(name='Corona', quantity=5, price=300.0)}
+        self.beer_repository.get_beers_with_name.return_value = {
+            'Quilmes': Beer(name='Quilmes', quantity=5, price=150.0),
+            'Club Colombia': Beer(name='Club Colombia', quantity=5,
+                                  price=200.0),
+            'Corona': Beer(name='Corona', quantity=5, price=300.0)}
 
-        order = self.order_usecase.get_order(order_id='1')
+        order = self.order_usecase.get_order(orderInput=OrderInput('1'))
 
         self.assertEqual(expected_order_for_success(), order)
 
@@ -105,4 +107,4 @@ class TestOrderUseCase(TestCase):
                                                                  'Corona': Beer(name='Corona', quantity=5, price=300.0)}
 
         with self.assertRaises(InvalidBeerException):
-            self.order_usecase.get_order('123')
+            self.order_usecase.get_order(orderInput=OrderInput('1'))

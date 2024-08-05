@@ -2,6 +2,7 @@ import dataclasses
 from typing import Dict, List
 
 from app.domain.entities.order import Order, Item
+from app.domain.entities.order_input import OrderInput
 from app.domain.exceptions.invalid_beer_exception import InvalidBeerException
 from app.domain.exceptions.not_found_exception import NotFoundException
 from app.domain.repositories.beer_repository import BeerRepository
@@ -15,8 +16,8 @@ class OrderUseCase:
         self.__beer_repository = beer_repository
         self.__taxes_percentage = taxes
 
-    def get_order(self, order_id: str) -> Order:
-        order = self.__repository.get_order_by_id(order_id)
+    def get_order(self, orderInput: OrderInput) -> Order:
+        order = self.__repository.get_order_by_id(orderInput.order_id)
         if order is None:
             raise NotFoundException()
 

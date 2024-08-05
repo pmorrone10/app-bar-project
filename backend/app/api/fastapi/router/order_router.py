@@ -3,6 +3,7 @@ from fastapi import APIRouter, HTTPException
 from app.api.fastapi.presenter.order_presenter import OrderPresenter
 from app.api.fastapi.schema.order_schema import OrderSchema
 from app.core.usecases.order_usecase import OrderUseCase
+from app.domain.entities.order_input import OrderInput
 from app.domain.exceptions.not_found_exception import NotFoundException
 from app.domain.exceptions.invalid_beer_exception import InvalidBeerException
 
@@ -19,7 +20,7 @@ class OrderRouter:
         @self.router.get("/order/{order_id}")
         def get_order_status(order_id: str):
             try:
-                order = self.__order_usecase.get_order(order_id)
+                order = self.__order_usecase.get_order(orderInput=OrderInput(order_id))
                 return self.__presenter.transform(order)
             except NotFoundException:
                 raise HTTPException(status_code=404, detail="Order not found")
