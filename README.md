@@ -10,6 +10,8 @@ _Este comando se va a encargar de buildear ambas imagenes y ponerlas a correr_
 
 ## Backend
 
+_Se uso un numero secuencial en el id de las ordenes por un tema de simplicidad aunque no sea lo recomendable_
+
 ### Tests
 
 _Se creo un archivo makefile para simplificar la ejecucion de los test_
