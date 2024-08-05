@@ -25,7 +25,7 @@ describe("Summary Component", () => {
   test("shows toast message on button click", () => {
     render(<Summary subtotal="100" taxes="5" total="105" />);
 
-    const button = screen.getByText("Pagar");
+    const button = screen.getByText("PAY");
     fireEvent.click(button);
 
     expect(screen.getByText("Not implemented yet")).toBeInTheDocument();
