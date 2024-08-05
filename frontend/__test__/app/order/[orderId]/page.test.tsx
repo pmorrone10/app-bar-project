@@ -46,6 +46,7 @@ describe("OrderPage", () => {
       expect(screen.getByText(mockOrder.subtotal)).toBeInTheDocument();
       expect(screen.getByText(mockOrder.taxes)).toBeInTheDocument();
       expect(screen.getByText(mockOrder.total)).toBeInTheDocument();
+      expect(screen.getByText("Discount Code")).toBeInTheDocument();
     });
   });
 });
